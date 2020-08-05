@@ -1,0 +1,17 @@
+language: node_js
+
+node_js: "node"
+
+install:
+  - npm install
+
+script: npm test
+
+after_script: npm install coveralls && npm run coveralls
+services:
+  - postgresql
+
+before_script:
+  - npm install -g sequelize-cli
+  - npm install strip-ansi --save
+  - psql -c 'create database e_shop_test;' -U postgres
