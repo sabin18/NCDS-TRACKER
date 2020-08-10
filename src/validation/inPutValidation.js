@@ -1,5 +1,5 @@
 import Joi from '@hapi/joi';
-import responseUtil from '../utils/responseUtil';
+import responseUtil from '../Utils/responseUtil';
 
 const { ErrorResponse } = responseUtil;
 
