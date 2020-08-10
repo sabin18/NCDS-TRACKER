@@ -1,7 +1,7 @@
 import models from '../../database/models'
 import responseUtil from '../../Utils/responseUtil'
 import strings from '../../Utils/strings'
-import hashPassword from '../../utils/hashPassword';
+import hashPassword from '../../Utils/hashPassword';
 import isMyBusiness from '../../helpers/checkBusiness'
 import { Op } from 'sequelize';
 import generateToken from '../../helpers/generateToken';

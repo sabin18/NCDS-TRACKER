@@ -4,7 +4,7 @@ import strings from '../../Utils/strings';
 import bcrypt from 'bcrypt';
 import EmailHelper from '../../helpers/EmailHelper';
 import EmailToken from '../../helpers/EmailToken';
-import hashPassword from '../../utils/hashPassword';
+import hashPassword from '../../Utils/hashPassword';
 import jwt from 'jsonwebtoken';
 
 const { ErrorResponse, response } = responseUtil;
