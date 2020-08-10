@@ -2,7 +2,7 @@ import models from '../../database/models'
 import responseUtil from '../../Utils/responseUtil'
 import strings from '../../Utils/strings'
 import isMyBusiness from '../../helpers/checkBusiness'
-import AllMyBusiness from '../../helpers/AllMyBusiness'
+import AllMyBusiness from '../../helpers/AllMybusiness'
 
 
 const { ErrorResponse, response } = responseUtil;
