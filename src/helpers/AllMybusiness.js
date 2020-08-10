@@ -6,6 +6,7 @@ const { ErrorResponse,response } = responseUtil;
 
 const AllMyPharmacy = async (req,res)  =>{
 const { id } = req.user.payload;
+
 const pharmacy = await models.pharmacy.findAll({where:{owner:id}});
 const employee = await models.employees.findOne({ where:{userId:id}});
 
@@ -19,9 +20,11 @@ const allEmployeePharmacy =!employee ? employee: await models.pharmacy.findAll({
  }
 
 if(!pharmacy.lenght===0){
+
  return response(res,200,'',pharmacy);
 }
 else{
+  
 return response(res,200,allEmployeepharmacy);  
 }
 }
