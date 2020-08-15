@@ -24,14 +24,14 @@ class ResetPasswordController {
     if(user){
     const resetToken = ResetToken(user);
     const APP_URL = host
-    ? `${host}/users/resetPassword/${resetToken}`
+    ? `${host}/auth/users/resetPassword/${resetToken}`
     : `${req.protocol}://${req.headers.host}/api/v1/auth/users/resetPassword/${resetToken}`;
 
-    await EmailHelper.AuthEmail('E-shop Reset password Link',
+    await EmailHelper.AuthEmail('NCDS Reset Password Link',
     email,user.firstName,
    'Please you can reset your password now',
-   'reset your password.',
-   APP_URL,'reset password.'
+   'Reset your password.',
+   APP_URL,'Reset password.'
    );
     
     return response (res,200,strings.users.success.SEND_EMAIL);
