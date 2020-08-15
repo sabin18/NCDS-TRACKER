@@ -107,8 +107,8 @@ static validateMedication(req, res, next) {
 }
 static validateResetpassword(req, res, next) {
   const schema = Joi.object({
-    newPassword: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/).message('password field should contain at least 8 characters, at least 1 lowercase, 1 uppercase and 1 number and a special character.').required(),
-    confirmPassword: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/).message('confirmpassword field should contain at least 8 characters, at least 1 lowercase, 1 uppercase and 1 number and a special character.').required(),
+    newPassword: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/).message('Newpassword field should contain at least 6 characters, at least 1 lowercase, 1 uppercase and 1 number and a special character.').required(),
+    confirmPassword: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/).message('confirmpassword field should contain at least 6 characters, at least 1 lowercase, 1 uppercase and 1 number and a special character.').required(),
   });
   validation(req, res, schema, next);
 }
