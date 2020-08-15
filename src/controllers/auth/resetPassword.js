@@ -24,7 +24,7 @@ class ResetPasswordController {
     if(user){
     const resetToken = ResetToken(user);
     const APP_URL = host
-    ? `${host}/auth/users/resetPassword/${resetToken}`
+    ? `${host}/resetPassword/${resetToken}`
     : `${req.protocol}://${req.headers.host}/api/v1/auth/users/resetPassword/${resetToken}`;
 
     await EmailHelper.AuthEmail('NCDS Reset Password Link',
