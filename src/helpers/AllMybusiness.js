@@ -14,18 +14,17 @@ const allEmployeePharmacy =!employee ? employee: await models.pharmacy.findAll({
     attributes: { exclude: ['payment'] },
     include: [{ association: 'user',attributes: { exclude: ['password','role','createdAt','updatedAt'] }},{ association: 'payments', attributes: ['amount','payDate','expiryDate','period'] }],
      })
-
- if(pharmacy.lenght===0 && allEmployeePharmacy.lenght===0){
+ if(pharmacy.length===0 && allEmployeePharmacy.length===0){
    return  ErrorResponse(res,404,strings.pharmacy.error.pharmacy_NOT_EXIST);
  }
 
-if(!pharmacy.lenght===0){
+if(pharmacy.length!=0){
 
  return response(res,200,'',pharmacy);
 }
 else{
   
-return response(res,200,allEmployeepharmacy);  
+return response(res,200,allEmployeePharmacy);  
 }
 }
 
