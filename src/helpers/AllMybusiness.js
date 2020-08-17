@@ -7,7 +7,11 @@ const { ErrorResponse,response } = responseUtil;
 const AllMyPharmacy = async (req,res)  =>{
 const { id } = req.user.payload;
 
-const pharmacy = await models.pharmacy.findAll({where:{owner:id}});
+const pharmacy = await models.pharmacy.findAll({where:{owner:id},
+  attributes: { exclude: ['payment'] },
+  include: [{ association: 'user',attributes: { exclude: ['password','role','createdAt','updatedAt'] }},{ association: 'payments', attributes: ['amount','payDate','expiryDate','period'] }],
+
+});
 const employee = await models.employees.findOne({ where:{userId:id}});
 
 const allEmployeePharmacy =!employee ? employee: await models.pharmacy.findAll({where:{id:employee.pharmacyId},
