@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     date: DataTypes.STRING,
     user: DataTypes.UUID,
     pharmacyId: DataTypes.UUID,
+    quantityType: DataTypes.STRING,
     expiryDate:DataTypes.STRING
   }, {});
   records.associate = function(models) {

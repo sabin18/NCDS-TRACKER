@@ -14,7 +14,7 @@ const { ErrorResponse, response } = responseUtil;
 class RecordController {
 
 static async addMedicalRecord(req,res,next) {
-const {patient,quantity,expiryDate,disease,medication}=req.body;
+const {patient,quantity,expiryDate,disease,medication,quantityType}=req.body;
 const {businessID}=req.params;
 const {id}=req.user.payload;
 
@@ -46,6 +46,7 @@ const recordData=[{
     date:moment().format('YYYY-MM-DD HH:mm:ss'),
     user:id,
     pharmacyId:businessID,
+    quantityType:quantityType,
     expiryDate:expiryDate
 },
 
