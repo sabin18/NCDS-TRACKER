@@ -31,6 +31,9 @@ module.exports = {
       pharmacyId: {
         type: Sequelize.UUID
       },
+      quantityType:{
+        type: Sequelize.STRING
+      },
       expiryDate:{
         type: Sequelize.STRING
       },

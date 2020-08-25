@@ -67,7 +67,7 @@ static validateLogin(req, res, next) {
    
   }
 
-  static validateUpdPatient(req, res, next) {
+  static validateUpdatePatient(req, res, next) {
     const schema = Joi.object({
       firstName: Joi.string().min(3).max(250).message('name field should be at least 3 alphanumeric characters long.'),
       lastName: Joi.string().min(3).max(250).message('name field should be at least 3 alphanumeric characters long.'),
@@ -83,6 +83,7 @@ static validateLogin(req, res, next) {
       quantity:Joi.number().integer().min(1).required(),
       expiryDate: Joi.string().regex(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/).message('expiryDate format must be YYYY-MM-DD'),
       disease:Joi.string().min(3).max(50).required(),
+      quantityType:Joi.string().min(3).max(50).required(),
       medication:Joi.string().min(3).max(50).required(),
     });
     validation(req, res, schema, next);
