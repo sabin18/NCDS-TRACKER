@@ -15,6 +15,18 @@ const validation = (req, res, schema, next) => {
   return next();
 };
 
+const validationArray = (req,res, schema, next) => {
+  const { error } = schema.validate(req.body.medicalRecords, req.params, { abortEarly: false });
+  if (error) {
+    const errorMessages = [];
+    error.details.forEach(detail => {
+      errorMessages.push(detail.message.split('"').join(''));
+    });
+    return ErrorResponse(res,400,errorMessages);
+  }
+  return next();
+};
+
 class Inputvalidation {
 static validateLogin(req, res, next) {
     const schema = Joi.object({
@@ -78,15 +90,16 @@ static validateLogin(req, res, next) {
  
 }
   static validateAddrecord(req, res, next) {
-    const schema = Joi.object({
+    const schema = Joi.array()
+      .items(Joi.object({
       patient: Joi.number().integer().min(1).required(),
       quantity:Joi.number().integer().min(1).required(),
-      expiryDate: Joi.string().regex(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/).message('expiryDate format must be YYYY-MM-DD'),
+      expiryDate: Joi.string().regex(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/).message('expiryDate format must be YYYY-MM-DD').required(),
       disease:Joi.string().min(3).max(50).required(),
       quantityType:Joi.string().min(3).max(50).required(),
       medication:Joi.string().min(3).max(50).required(),
-    });
-    validation(req, res, schema, next);
+    }));
+    validationArray(req, res, schema, next);
  
 }
 static validateAddPayment(req, res, next) {

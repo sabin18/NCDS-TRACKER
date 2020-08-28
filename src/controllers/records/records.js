@@ -2,60 +2,24 @@ import models from '../../database/models'
 import responseUtil from '../../Utils/responseUtil'
 import strings from '../../Utils/strings'
 import isMyBusiness from '../../helpers/checkBusiness'
-import sendNotification from '../../helpers/sendNotification'
-import { Op } from 'sequelize';
-import ip from 'ip';
-import moment from 'moment';
-
+import saveMedicalRecord from  '../../helpers/createMedicalRecord';
 
 const { ErrorResponse, response } = responseUtil;
-// const MyIp=ip.address();
 
 class RecordController {
 
 static async addMedicalRecord(req,res,next) {
-const {patient,quantity,expiryDate,disease,medication,quantityType}=req.body;
+const { medicalRecords }=req.body;
 const {businessID}=req.params;
 const {id}=req.user.payload;
 
 await isMyBusiness(req,res);
 
-const checkRecord = await models.records.findAll({});
-const checkPatient = await models.patient.findOne({where:{id:patient}});
-const deseaseName = await models.diseases.findOne({where:{name:disease}});
-const medicationName = await models.medications.findOne({where:{name:medication}});
-const no = parseInt(checkRecord.length) + 1;
-const envoice=(`${moment().format('YYYY')}/${moment().format('MM')}/ABC00${no}`)
+await Promise.all(medicalRecords.map(async MedicalRecord => {
+    await saveMedicalRecord(res, MedicalRecord, businessID,id);
+  }));
 
-if (!checkPatient){
-   return  ErrorResponse(res,404,strings.patient.error.PATIENT_NOT_FOUND)
 }
-if (!deseaseName){
-    return  ErrorResponse(res,404,strings.disease.error.DISEASE_NOT_FOUND)
- }
- 
-if (!medicationName){
-    return  ErrorResponse(res,404,strings.medication.error.MEDICATION_NOT_FOUND)
- }
-const recordData=[{
-    patientId:patient,
-    quantity:quantity,
-    invoiceNumber:envoice,
-    disease:deseaseName.id,
-    medication:medicationName.id,
-    date:moment().format('YYYY-MM-DD HH:mm:ss'),
-    user:id,
-    pharmacyId:businessID,
-    quantityType:quantityType,
-    expiryDate:expiryDate
-},
-
-];
-const newRecord = await models.records.bulkCreate(recordData);
-await models.patient.update({record: envoice},{where:{id:patient}});
-return response (res,201,strings.record.success.RECORD_CREATED,newRecord);
-}
-
 
 static async viewMedicalRecords(req,res) {
     await isMyBusiness(req,res);
