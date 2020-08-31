@@ -7,8 +7,19 @@ import allRoutes from './routes';
 
 dotenv.config();
 
+const whitelist = ['http://localhost:8080', 'https://ncds-frontend-staging.herokuapp.com/']
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
 const app = express();
-app.use(cors());
+app.use(cors(corsOptions));
 const http = require('http').createServer(app);
 
 
@@ -31,7 +42,7 @@ app.use((req, res, next) => {
 http.listen(port, () => {console.log(`NCDS is runnig server on port ${port}...`)});
 
 app.use('/', allRoutes);
-// app.use('/upload-csv', allRoutes);
+
 app.use('*', (req, res) => {
   res.status(404).json({
     status: 404,
