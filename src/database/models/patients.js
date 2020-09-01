@@ -10,9 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     
   }, {});
   patient.associate = function(models) {
-    patient.belongsTo(models.records, {
+    patient.hasMany(models.records, {
       as: 'records',
-      foreignKey: 'record',
       targetKey: 'invoiceNumber',
     });
     patient.belongsTo(models.Users, {

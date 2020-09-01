@@ -35,12 +35,15 @@ static async getAllPatient(req,res) {
    
    const Patient = await models.patient.findAll({
    attributes: { exclude: ['user','record','createdAt', 'updatedAt'] },
-   include: [{ association: 'users',attributes: { exclude: ['password','role','createdAt','updatedAt'] },include: [{ association: 'roles', attributes: ['name'] }] },{ association: 'records',attributes: {exclude: ['user', 'pharmacyId','patientId','disease','medication','createdAt', 'updatedAt']},
+   include: [{ association: 'users',attributes: { exclude: ['password','role','createdAt','updatedAt'] },include: [{ association: 'roles', attributes: ['name'] }] },
+   { association: 'records',attributes: {exclude: ['user', 'pharmacyId','patientId','disease','medication','createdAt', 'updatedAt']},
    include: [{ association: 'users',attributes: { exclude: ['password','role','createdAt','updatedAt'] },include: [{ association: 'roles', attributes: ['name'] }] },
    { association: 'pharmacy', attributes: ['name'] },{ association: 'patient', attributes: { exclude: ['createdAt','updatedAt']}},
    { association: 'diseases', attributes: ['name'] },{ association: 'medications', attributes: ['name'] }],}],
 });
-    return response (res,200,'',Patient);   
+if (Patient){
+    return response (res,200,'',Patient);  
+} 
 }
 
 static async getOnePatient(req,res) {
