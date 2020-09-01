@@ -7,19 +7,8 @@ import allRoutes from './routes';
 
 dotenv.config();
 
-const whitelist = ['http://localhost:8080', 'https://ncds-frontend-staging.herokuapp.com/']
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
-
 const app = express();
-app.use(cors(corsOptions));
+app.use(cors());
 const http = require('http').createServer(app);
 
 
